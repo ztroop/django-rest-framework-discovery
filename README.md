@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/ztroop/django-rest-framework-discovery.svg?branch=master)](https://travis-ci.org/ztroop/django-rest-framework-discovery)
 
-Discovery allows you to create an API from an existing database with little to no effort. This project is based on Shabda Raaj's [Bookrest][1]. You can then leverage the capabilties of the Django Rest Framework to apply [filtering][2], [pagination][3] and generate [documentation][4].
+Discovery allows you to create an API from an existing database with little to no effort. This project is based on Shabda Raaj's [Bookrest][1]. You can then leverage the capabilties of the Django Rest Framework to apply [filtering][2], [pagination][3] and [documentation][4] generation.
 
 [1]: https://github.com/agiliq/bookrest
 [2]: https://django-rest-framework.org/api-guide/filtering/
@@ -16,7 +16,7 @@ For successful generation, you need to have a primary key present in the table. 
 ### Installation
 
 ```bash
-pip3 install rest_framework_discovery
+pip install djangorestframework-discovery
 ```
 
 In your `settings.py`:
