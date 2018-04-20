@@ -1,5 +1,7 @@
 ## Django Rest Framework Discovery
 
+[![Build Status](https://travis-ci.org/ztroop/django-rest-framework-discovery.svg?branch=master)](https://travis-ci.org/ztroop/django-rest-framework-discovery)
+
 Discovery allows you to create an API from an existing database with little to no effort. This project is based on Shabda Raaj's [Bookrest][1]. You can then leverage the capabilties of the Django Rest Framework to apply [filtering][2], [pagination][3] and generate [documentation][4].
 
 [1]: https://github.com/agiliq/bookrest
