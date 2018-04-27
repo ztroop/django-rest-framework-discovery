@@ -1,6 +1,6 @@
-from collections import OrderedDict
-import re
 import functools
+import re
+from collections import OrderedDict
 
 from django.conf import settings
 from django.db import models
@@ -17,16 +17,13 @@ class ConnectionToModels:
 
     @functools.lru_cache(maxsize=64)
     def get_models(self):
-        """Get all models in the given connection."""
-
+        """Get all models from the given connection."""
         tables = self.get_tables()
         if hasattr(settings, 'DISCOVERY_INCLUDE'):
             tables = [t for t in tables if t in settings.DISCOVERY_INCLUDE]
         elif hasattr(settings, 'DISCOVERY_EXCLUDE'):
             tables = [t for t in tables if t not in settings.DISCOVERY_EXCLUDE]
-        return [
-            self.get_model(t.name)
-            for t in tables if self.has_primary_key(t.name)]
+        return [self.get_model(t.name) for t in tables if self.has_primary_key(t.name)]
 
     def get_model(self, table_name):
 
@@ -35,9 +32,7 @@ class ConnectionToModels:
             db_table = table_name
 
         table_fields = self.get_fields(table_name)
-        model_fields = [
-            self.get_field(table_name, field_info)
-            for field_info in table_fields]
+        model_fields = [self.get_field(table_name, field_info) for field_info in table_fields]
         attrs = dict(model_fields)
 
         class DiscoveryQueryset(query.QuerySet):
@@ -54,7 +49,6 @@ class ConnectionToModels:
 
     def get_tables(self):
         """Get a list of tables in the DB."""
-
         with self.connection.cursor() as cursor:
             table_info = self.connection.introspection.get_table_list(cursor)
         return table_info
@@ -62,34 +56,23 @@ class ConnectionToModels:
     @functools.lru_cache(maxsize=32)
     def get_fields(self, table_name):
         """Get a list of fields in a table."""
-
         with self.connection.cursor() as cursor:
-            all_fields = self.connection.introspection.get_table_description(
-                cursor, table_name
-            )
+            all_fields = self.connection.introspection.get_table_description(cursor, table_name)
             return [field for field in all_fields if not field.name == "id"]
 
     def get_field(self, table_name, field_info):
-        """Given the database connection, the table name, and the cursor field_info
+        """
+        Given the database connection, the table name, and the cursor field_info
         description, this routine will return the given field type name, as
-        well as any additional keyword parameters and notes for the field."""
-
+        well as any additional keyword parameters and notes for the field.
+        """
         field_params = OrderedDict()
-        field_notes = []
-
         with self.connection.cursor() as cursor:
-            primary_key_column = self.connection.introspection.\
-                get_primary_key_column(
-                    cursor, table_name
-                )
-
+            primary_key_column = self.connection.introspection.get_primary_key_column(cursor, table_name)
         try:
-            field_type = self.connection.introspection.get_field_type(
-                field_info[1], field_info
-            )
+            field_type = self.connection.introspection.get_field_type(field_info[1], field_info)
         except KeyError:
             field_type = "TextField"
-            field_notes.append("This field type is a guess.")
 
         # This is a hook for data_types_reverse to return a tuple of
         # (field_type, field_params_dict).
@@ -103,16 +86,8 @@ class ConnectionToModels:
 
         if field_type == "DecimalField":
             if field_info[4] is None or field_info[5] is None:
-                field_notes.append(
-                    "max_digits and decimal_places have been guessed, as this "
-                    "database handles decimal fields as float"
-                )
-                field_params["max_digits"] = field_info[4] if field_info[
-                    4
-                ] is not None else 10
-                field_params["decimal_places"] = field_info[5] if field_info[
-                    5
-                ] is not None else 5
+                field_params["max_digits"] = field_info[4] if field_info[4] is not None else 10
+                field_params["decimal_places"] = field_info[5] if field_info[5] is not None else 5
             else:
                 field_params["max_digits"] = field_info[4]
                 field_params["decimal_places"] = field_info[5]
@@ -122,9 +97,7 @@ class ConnectionToModels:
 
     def has_primary_key(self, table_name):
         with self.connection.cursor() as cursor:
-            return self.connection.introspection.get_primary_key_column(
-                cursor, table_name
-            )
+            return self.connection.introspection.get_primary_key_column(cursor, table_name)
 
     @staticmethod
     def table_to_model(table_name):

@@ -63,6 +63,7 @@ urlpatterns = [
 ### Configuration
 
 You can configure the following in `settings.py`:
-- `DISCOVERY_PROFILE_NAME:` The database profile name to use with discovery.
-- `DISCOVERY_INCLUDE:` A list of tables that you would like to *only* include.
-- `DISCOVERY_EXCLUDE:` A list of tables that you would like to ignore.
+- `DISCOVERY_PROFILE_NAME`: (required) The database profile name to use with discovery.
+- `DISCOVERY_READ_ONLY`: (optional) `True` or `False`, whether or not the API should be read-only.
+- `DISCOVERY_INCLUDE`: (optional) A list of tables that you would like to *only* include.
+- `DISCOVERY_EXCLUDE`: (optional) A list of tables that you would like to ignore.
