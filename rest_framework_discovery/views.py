@@ -49,7 +49,7 @@ class ModelToDrf:
 
     @staticmethod
     def get_viewset(model_class, serializer_klass):
-        readonly = hasattr(settings, 'DISCOVERY_READ_ONLY')
+        readonly = settings.DISCOVERY_READ_ONLY if hasattr(settings, 'DISCOVERY_READ_ONLY') else None
         searchable_field_names = [field.name for field in model_class._meta.get_fields()]
 
         class ViewSet(viewsets.ReadOnlyModelViewSet if readonly else viewsets.ModelViewSet):
