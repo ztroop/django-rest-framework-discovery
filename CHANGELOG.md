@@ -7,6 +7,7 @@ All notable changes to this code base will be documented in this file, in every 
 #### Features
 
 - Add `DISCOVERY_READ_ONLY` setting to optionally specify whether or not the API should be read-only.
+- Add testing and tox to the project build.
 
 #### Improvements
 

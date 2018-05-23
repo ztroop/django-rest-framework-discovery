@@ -2,11 +2,10 @@ import functools
 import re
 from collections import OrderedDict
 
-from django.conf import settings
 from django.db import models
 from django.db.models import query
 
-DISCOVERY_DB_NAME = settings.DISCOVERY_PROFILE_NAME
+from rest_framework_discovery.settings import ConfigWrapper
 
 
 class ConnectionToModels:
@@ -14,15 +13,17 @@ class ConnectionToModels:
 
     def __init__(self, connection):
         self.connection = connection
+        self.include_tables = ConfigWrapper.tables_include()
+        self.exclude_tables = ConfigWrapper.tables_exclude()
 
     @functools.lru_cache(maxsize=64)
     def get_models(self):
         """Get all models from the given connection."""
         tables = self.get_tables()
-        if hasattr(settings, 'DISCOVERY_INCLUDE'):
-            tables = [t for t in tables if t in settings.DISCOVERY_INCLUDE]
-        elif hasattr(settings, 'DISCOVERY_EXCLUDE'):
-            tables = [t for t in tables if t not in settings.DISCOVERY_EXCLUDE]
+        if self.include_tables:
+            tables = [t for t in tables if t.name in self.include_tables]
+        elif self.exclude_tables:
+            tables = [t for t in tables if t.name not in self.exclude_tables]
         return [self.get_model(t.name) for t in tables if self.has_primary_key(t.name)]
 
     def get_model(self, table_name):
@@ -39,7 +40,7 @@ class ConnectionToModels:
 
             def __init__(self, *args, **kwargs):
                 super().__init__(*args, **kwargs)
-                self._db = DISCOVERY_DB_NAME
+                self._db = ConfigWrapper.alias_name()
 
         attrs["__module__"] = "rest_framework_discovery.models"
         attrs["Meta"] = Meta
@@ -62,9 +63,10 @@ class ConnectionToModels:
 
     def get_field(self, table_name, field_info):
         """
-        Given the database connection, the table name, and the cursor field_info
-        description, this routine will return the given field type name, as
-        well as any additional keyword parameters and notes for the field.
+        Given the database connection, the table name, and the
+        cursor field_info description, this routine will return
+        the given field type name, as well as any additional
+        keyword parameters and notes for the field.
         """
         field_params = OrderedDict()
         with self.connection.cursor() as cursor:

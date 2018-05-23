@@ -30,17 +30,16 @@ INSTALLED_APPS = [
 ]
 ```
 
-Add a variable to your `settings.py` named `DISCOVERY_PROFILE_NAME`. You can use any value, but `discovery` is recommended. You will use that to define the database you would like to use for API generation.
+Add a variable to your `settings.py` named `DISCOVERY_ALIAS_NAME`. You can use any value, but `discovery` is recommended. You will use that to define the database you would like to use for viewset generation.
 
 ```python
-DISCOVERY_PROFILE_NAME = 'discovery'
-
+DISCOVERY_ALIAS_NAME = 'discovery'
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     },
-    DISCOVERY_PROFILE_NAME: {
+    'discovery': {
         'NAME': 'YOUR_DB_NAME',
         'ENGINE': 'django.db.backends.postgresql',
         'USER': 'YOUR_DB_USER',
@@ -60,10 +59,14 @@ urlpatterns = [
 ]
 ```
 
+### Testing
+
+You can run through the testing suite by running `runtests.py` or `tox`.
+
 ### Configuration
 
 You can configure the following in `settings.py`:
-- `DISCOVERY_PROFILE_NAME`: (required) The database profile name to use with discovery.
-- `DISCOVERY_READ_ONLY`: (optional) `True` or `False`, whether or not the API should be read-only.
+- `DISCOVERY_ALIAS_NAME`: (required) The database profile name to use with discovery.
+- `DISCOVERY_READ_ONLY`: (optional) `True` or `False`, whether or not the viewsets should be read-only.
 - `DISCOVERY_INCLUDE`: (optional) A list of tables that you would like to *only* include.
 - `DISCOVERY_EXCLUDE`: (optional) A list of tables that you would like to ignore.
