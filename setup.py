@@ -1,11 +1,9 @@
 from setuptools import find_packages, setup
 
-version = "0.1.6"
-
 setup(
     author='Zackary Troop',
     name='djangorestframework-discovery',
-    version=version,
+    version='0.1.7',
     url='https://github.com/ztroop/djangorestframework-discovery',
     license='BSD',
     description='Create a queryable data source from an existing database.',
