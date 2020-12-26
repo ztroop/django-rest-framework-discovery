@@ -1,19 +1,24 @@
 ## Django Rest Framework Discovery
 
+### Summary
+
 [![Build Status](https://travis-ci.org/ztroop/django-rest-framework-discovery.svg?branch=master)](https://travis-ci.org/ztroop/django-rest-framework-discovery)
 [![PyPI version](https://badge.fury.io/py/djangorestframework-discovery.svg)](https://badge.fury.io/py/djangorestframework-discovery)
 
-Discovery allows you to create an API from an existing database with little to no effort. This project is based on Shabda Raaj's [Bookrest][1]. You can then leverage the capabilties of the Django Rest Framework to apply [filtering][2], [pagination][3] and [documentation][4] generation. A project demonstration is [available][5].
+Discovery allows you to create an API from an existing database with minimal effort. This project is based on Shabda Raaj's [Bookrest][1]. You can also leverage the capabilties of the Django Rest Framework to apply [filtering][2], [pagination][3] and [documentation][4] generation. Examples can be found in the `examples` directory.
 
 [1]: https://github.com/agiliq/bookrest
 [2]: https://django-rest-framework.org/api-guide/filtering/
 [3]: https://django-rest-framework.org/api-guide/pagination/
 [4]: https://django-rest-framework.org/topics/documenting-your-api/
-[5]: https://github.com/ztroop/django-discovery-example
+
+### Problem Statement
+
+The data is not always accessible in legacy applications. You might be in a situation where you need access to the data for reporting or prototyping new tools. Adding new functionality to legacy software can be cost prohibitive and this solution aims to work-around this issue.
 
 ### Requirements
 
-For successful generation, you need to have a primary key present in the table. Otherwise, it will be silently ignored.
+For successful schema generation, you need to have a primary key present in the table. Otherwise, it will be silently ignored.
 
 ### Installation
 
@@ -58,6 +63,15 @@ urlpatterns = [
     # ...
     url(r'^api/discovery/', include('rest_framework_discovery.urls')),
 ]
+```
+
+You will also need to include `DEFAULT_SCHEMA_CLASS` explicitly in `settings.py` to get this to work. [See additional details.](https://www.django-rest-framework.org/community/3.10-announcement/).
+
+```python
+REST_FRAMEWORK = {
+  ...
+  'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
+}
 ```
 
 ### Testing

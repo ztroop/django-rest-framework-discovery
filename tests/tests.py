@@ -1,10 +1,11 @@
+# pylint: disable=maybe-no-member
 import json
 
 from django.conf import settings
 from django.test import Client, RequestFactory, TestCase
-from tests.models import House, Owner
 
 from rest_framework_discovery.views import DiscoveryViewsets
+from tests.models import House, Owner
 
 
 class TestViews(TestCase):
@@ -33,12 +34,12 @@ class TestViews(TestCase):
 
     def test_put_request(self):
         """Perform PUT request on the generated viewset."""
-        response = self.client.post(
+        response = self.client.put(
             '/api/tests_owner/1/',
             json.dumps({'owner_id': 1, 'first_name': 'Jim', 'last_name': 'Smith'}),
             content_type='application/json',
         )
-        self.assertEqual(response.status_code, 405)  # TODO: Method not allowed for now.
+        self.assertEqual(response.status_code, 200)
 
     def test_patch_request(self):
         """Perform PATCH request on the generated viewset."""

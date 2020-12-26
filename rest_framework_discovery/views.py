@@ -20,7 +20,7 @@ class DiscoveryViewsets:
                 'objects_count': model.objects.count(),
                 'url': reverse('{}-list'.format(
                     model._meta.model_name), request=request)
-            } for model in self.models]
+            } for model in self.models]  # pylint: disable=maybe-no-member
             return Response(table_names)
 
     def get_viewsets(self):

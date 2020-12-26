@@ -2,9 +2,5 @@ sudo: false
 language: python
 cache: pip
 before_script:
-- pip install tox
-
+  - pip install tox
 script: tox
-notifications:
-  on_success: change
-  on_failure: always

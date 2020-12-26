@@ -4,3 +4,5 @@ build/
 *.egg-info
 .tox/
 env/
+.vscode
+__pycache__/
