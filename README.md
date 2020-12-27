@@ -2,7 +2,7 @@
 
 ### Summary
 
-[![Build Status](https://travis-ci.org/ztroop/django-rest-framework-discovery.svg?branch=master)](https://travis-ci.org/ztroop/django-rest-framework-discovery)
+![Build Status](https://github.com/ztroop/django-rest-framework-discovery/workflows/Build%20Status/badge.svg)
 [![PyPI version](https://badge.fury.io/py/djangorestframework-discovery.svg)](https://badge.fury.io/py/djangorestframework-discovery)
 [![Coverage Status](https://coveralls.io/repos/github/ztroop/django-rest-framework-discovery/badge.svg?branch=master)](https://coveralls.io/github/ztroop/django-rest-framework-discovery?branch=master)
 
