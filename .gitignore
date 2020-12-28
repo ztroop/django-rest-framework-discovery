@@ -4,6 +4,8 @@ build/
 *.egg-info
 .tox/
 env/
-.vscode
+.vscode/
 __pycache__/
 .coverage
+.idea/
+coverage.xml
