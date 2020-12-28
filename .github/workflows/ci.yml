@@ -16,5 +16,9 @@ jobs:
     - name: Run Tests
       run: |
         tox
-    - name: Coveralls
-      uses: AndreMiras/coveralls-python-action@develop
+    - name: Upload Coverage
+      uses: codecov/codecov-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        file: ./coverage.xml
+        verbose: true
