@@ -6,7 +6,7 @@ from django.conf import settings
 class ConfigWrapper(object):
     @staticmethod
     def alias_name():
-        if hasattr(settings, 'DISCOVERY_PROFILE_NAME'):
+        if hasattr(settings, 'DISCOVERY_PROFILE_NAME'):  # pragma: no cover
             warnings.warn(
                 "DISCOVERY_PROFILE_NAME is deprecated. Please use DISCOVERY_ALIAS_NAME instead.",
                 DeprecationWarning
