@@ -1,5 +1,14 @@
 name: Build Status
-on: ["push", "pull_request"]
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'rest_framework_discovery/**'
+      - 'tests/**'
+  pull_request:
+    branches:
+      - master
 
 jobs:
   test:
