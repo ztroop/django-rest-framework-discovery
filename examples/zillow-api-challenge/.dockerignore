@@ -1,0 +1,15 @@
+.data
+.git
+.vscode
+env
+venv
+temp
+tmp
+__pycache__
+
+*.pyc
+*.sqlite
+*.coverage
+migrations
+*.idea
+
